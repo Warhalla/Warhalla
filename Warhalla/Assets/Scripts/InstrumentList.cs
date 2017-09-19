@@ -9,9 +9,13 @@ public class InstrumentList : MonoBehaviour {
 	public GameObject viking_flute;
 	public GameObject viking_harp;
 	public GameObject viking_horn;
+	private int index = 0;
+	private List<Instrument> instrument_order;
+	private MusicManager music;
 
 	void Start () {
-		List<Instrument> instrument_order = new List<Instrument>();
+		instrument_order = new List<Instrument>();
+		music = FindObjectOfType<MusicManager>();
 
 		instrument_order.Add( Instrument.None);
 		instrument_order.Add( Instrument.None);
@@ -30,10 +34,21 @@ public class InstrumentList : MonoBehaviour {
 				Instantiate (viking_horn, new Vector2 (i * 2, 0), Quaternion.identity);
 			}
 		}
+		MusicManager.OnBar += IncrementIndex;
+	}
+
+	private void IncrementIndex(){
+		index++;
+		music.CheckInstrument();
+		print(GetCurrentViking());
+	}
+
+	public Instrument GetCurrentViking(){
+		return instrument_order[index];
 	}
 
 	Instrument RandomInstrument(){
-		int instrument = Random.Range(0,3);
+		int instrument = Random.Range(0,4);
 		return (Instrument) instrument;
 	}
 

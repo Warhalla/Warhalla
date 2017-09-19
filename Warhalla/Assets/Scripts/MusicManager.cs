@@ -18,31 +18,30 @@ public class MusicManager : MonoBehaviour {
 
 	private Instrument activeInstrument = Instrument.None;
 	public Image correct;
-	public Text activeInstrumentUI;
 
 	private AudioClip[] harps;
 	private AudioClip[] flutes;
+	private InstrumentList instrumentList;
 
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
+		instrumentList = FindObjectOfType<InstrumentList>();
 		harps = Resources.LoadAll<AudioClip>("Audio/Harp");
 		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
 		activeInstrument = instrument;
-		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 
-	public void CheckInstrument(Instrument instrument){
-		if(instrument == activeInstrument){
+	public void CheckInstrument(){
+		if(instrumentList.GetCurrentViking() == activeInstrument){
 			Correct();
 		} else {
 			Incorrect();
 		}
 		activeInstrument = Instrument.None;
-		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 	
 	private void Correct(){
@@ -69,11 +68,6 @@ public class MusicManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		CheckBeat();
-	}
-	
-	Instrument RandomAnyInstrument(){
-		int instrument = Random.Range(0,4);
-		return (Instrument) instrument;
 	}
 
 	void CheckBeat(){

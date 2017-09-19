@@ -17,7 +17,6 @@ public class RandomInstrumentOnBeat : MonoBehaviour {
 	}
 	
 	void UpdateText(){
-		music.CheckInstrument(requiredInstrument);
 		requiredInstrument = RandomInstrument();
 		text.text = requiredInstrument.ToString();
 	}
