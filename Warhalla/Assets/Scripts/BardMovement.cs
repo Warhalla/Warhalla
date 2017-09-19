@@ -12,7 +12,7 @@ public class BardMovement : MonoBehaviour {
 	private float timer;
 
 	void Start () {
-		MusicManager.OnBeat += BardMove;
+		MusicManager.OnBar += BardMove;
 	}
 
 	void Update () {
