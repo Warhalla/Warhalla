@@ -21,11 +21,13 @@ public class MusicManager : MonoBehaviour {
 	public Text activeInstrumentUI;
 
 	private AudioClip[] harps;
+	private AudioClip[] flutes;
 
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
 		harps = Resources.LoadAll<AudioClip>("Audio/Harp");
+		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -46,8 +48,14 @@ public class MusicManager : MonoBehaviour {
 	private void Correct(){
 		correct.color = Color.green;
 		if(activeInstrument == Instrument.Harp){
-			backgroundMusic.PlayOneShot(harps[Random.Range(0, harps.Length)]);
+			PlaySound(harps);
+		} else if(activeInstrument == Instrument.Flute){
+			PlaySound(flutes);
 		}
+	}
+
+	private void PlaySound(AudioClip[] clips){
+		backgroundMusic.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.5f);
 	}
 
 	private void Incorrect(){
