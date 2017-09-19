@@ -13,6 +13,7 @@ public class MusicManager : MonoBehaviour {
 	private int beatCounter = 0;
 
 	private AudioSource backgroundMusic;
+	public AudioSource[] instruments;
 	private bool loopedQuant = false;
 	private bool loopedBeat = false;
 
@@ -47,20 +48,27 @@ public class MusicManager : MonoBehaviour {
 	}
 	
 	private void Correct(){
-		if(activeInstrument == Instrument.Harp){
-			PlaySound(harps);
-		} else if(activeInstrument == Instrument.Flute){
-			PlaySound(flutes);
-		} else if(activeInstrument == Instrument.Horn){
-			PlaySound(horns);
-		}
-		instrumentList.GetCurrentViking().transform.parent = player.transform;
-		instrumentList.GetCurrentViking().transform.localPosition = new Vector3(Random.Range(-2f, -5f), Random.Range(-2f, 2f), 0);
-		instrumentList.GetCurrentViking().transform.rotation = new Quaternion(0,180,0,0);
+		PlayInstrument();
+		GameObject viking = instrumentList.GetCurrentViking();
+		viking.transform.parent = player.transform;
+		viking.transform.localPosition = new Vector3(Random.Range(-3f, -7f), Random.Range(-4f, 0f), 0);
+		viking.transform.rotation = new Quaternion(0,180,0,0);
+		viking.GetComponent<SpriteRenderer>().sortingOrder = -(int)(viking.transform.localPosition.y * 10);
+		player.SendMessage("LoudnessUp"); // Tie this to progressmeter instead
 	}
 
-	private void PlaySound(AudioClip[] clips){
-		backgroundMusic.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.5f);
+	private void PlayInstrument(){
+		if(activeInstrument == Instrument.Harp){
+			PlaySound(instruments[(int) activeInstrument], harps);
+		} else if(activeInstrument == Instrument.Flute){
+			PlaySound(instruments[(int) activeInstrument],flutes);
+		} else if(activeInstrument == Instrument.Horn){
+			PlaySound(instruments[(int) activeInstrument],horns);
+		}
+	}
+
+	private void PlaySound(AudioSource audioSource, AudioClip[] clips){
+		audioSource.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.5f);
 	}
 
 	private void Incorrect(){

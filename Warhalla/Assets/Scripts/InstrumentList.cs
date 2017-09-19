@@ -32,11 +32,11 @@ public class InstrumentList : MonoBehaviour {
 		instrument_order.Add(RandomInstrument());
 		int i = instrument_order.Count - 1;
 		if (instrument_order [i] == Instrument.Flute) {
-			viking_order.Add(Instantiate (viking_flute, new Vector2 (i * 2, 0), Quaternion.identity));
+			viking_order.Add(Instantiate (viking_flute, new Vector2 (i * 2, -1f), Quaternion.identity));
 		} else if (instrument_order [i] == Instrument.Harp) {
-			viking_order.Add(Instantiate (viking_harp, new Vector2 (i * 2, 0), Quaternion.identity));
+			viking_order.Add(Instantiate (viking_harp, new Vector2 (i * 2, -1f), Quaternion.identity));
 		} else if (instrument_order [i] == Instrument.Horn) {
-			viking_order.Add(Instantiate (viking_horn, new Vector2 (i * 2, 0), Quaternion.identity));
+			viking_order.Add(Instantiate (viking_horn, new Vector2 (i * 2, -1f), Quaternion.identity));
 		} else {
 			viking_order.Add(null);
 		}
