@@ -11,46 +11,49 @@ public class InstrumentList : MonoBehaviour {
 	public GameObject viking_horn;
 	private int index = 0;
 	private List<Instrument> instrument_order;
+	private List<GameObject> viking_order;
 	private MusicManager music;
 
 	void Start () {
 		instrument_order = new List<Instrument>();
+		viking_order = new List<GameObject>();
 		music = FindObjectOfType<MusicManager>();
 
-		instrument_order.Add( Instrument.None);
-		instrument_order.Add( Instrument.None);
-		instrument_order.Add( Instrument.None);
+		// instrument_order.Add( Instrument.None);
+		// instrument_order.Add( Instrument.None);
+		// instrument_order.Add( Instrument.None);
 		for (int i = 0; i < 40; i++) {
-			instrument_order.Add( RandomInstrument());
-		}
-		for (int i = 0; i < instrument_order.Count; i++) {
-			SpawnViking(i);
+			SpawnViking();
 		}
 		MusicManager.OnBar += IncrementIndex;
 	}
 
-	private void SpawnViking(int i){
+	private void SpawnViking(){
+		instrument_order.Add(RandomInstrument());
+		int i = instrument_order.Count - 1;
 		if (instrument_order [i] == Instrument.Flute) {
-			Instantiate (viking_flute, new Vector2 (i * 2, 0), Quaternion.identity);
-		}
-		if (instrument_order [i] == Instrument.Harp) {
-			Instantiate (viking_harp, new Vector2 (i * 2, 0), Quaternion.identity);
-		}
-		if (instrument_order [i] == Instrument.Horn) {
-			Instantiate (viking_horn, new Vector2 (i * 2, 0), Quaternion.identity);
+			viking_order.Add(Instantiate (viking_flute, new Vector2 (i * 2, 0), Quaternion.identity));
+		} else if (instrument_order [i] == Instrument.Harp) {
+			viking_order.Add(Instantiate (viking_harp, new Vector2 (i * 2, 0), Quaternion.identity));
+		} else if (instrument_order [i] == Instrument.Horn) {
+			viking_order.Add(Instantiate (viking_horn, new Vector2 (i * 2, 0), Quaternion.identity));
+		} else {
+			viking_order.Add(null);
 		}
 	}
 
 	private void IncrementIndex(){
 		index++;
-		instrument_order.Add( RandomInstrument());
-		SpawnViking(instrument_order.Count - 1);
 		music.CheckInstrument();
-		print(GetCurrentViking());
+		SpawnViking();
 	}
 
-	public Instrument GetCurrentViking(){
+	public Instrument GetCurrentInstrument(){
 		return instrument_order[index];
+	}
+
+	public GameObject GetCurrentViking(){
+		return viking_order[index];
 	}
 
 	Instrument RandomInstrument(){

@@ -23,6 +23,7 @@ public class MusicManager : MonoBehaviour {
 	private AudioClip[] flutes;
 	private AudioClip[] horns;
 	private InstrumentList instrumentList;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +32,7 @@ public class MusicManager : MonoBehaviour {
 		harps = Resources.LoadAll<AudioClip>("Audio/Harp");
 		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
 		horns = Resources.LoadAll<AudioClip>("Audio/Horn");
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -38,7 +40,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	public void CheckInstrument(){
-		if(instrumentList.GetCurrentViking() == activeInstrument){
+		if(instrumentList.GetCurrentInstrument() == activeInstrument && activeInstrument != Instrument.None){
 			Correct();
 		} else {
 			Incorrect();
@@ -55,6 +57,9 @@ public class MusicManager : MonoBehaviour {
 		} else if(activeInstrument == Instrument.Horn){
 			PlaySound(horns);
 		}
+		instrumentList.GetCurrentViking().transform.parent = player.transform;
+		instrumentList.GetCurrentViking().transform.localPosition = new Vector3(Random.Range(-2f, -5f), Random.Range(-2f, 2f), 0);
+		instrumentList.GetCurrentViking().transform.rotation = new Quaternion(0,180,0,0);
 	}
 
 	private void PlaySound(AudioClip[] clips){
