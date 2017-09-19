@@ -14,12 +14,15 @@ public class MusicManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
-		StartCoroutine(BeatEverySecond());
+		//StartCoroutine(BeatEverySecond());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if(Input.anyKeyDown){
+			//print(backgroundMusic.timeSamples);
+		}
+		CheckBeat();
 	}
 
 	IEnumerator BeatEverySecond(){
@@ -31,6 +34,16 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void CheckBeat(){
+		if ((Mathf.Min(backgroundMusic.timeSamples % 87273, Mathf.Abs((backgroundMusic.timeSamples % 87273) - 87273)) < 2000) && !loopedBeat) {
+			loopedBeat = true;
+			OnBeat();
+		}
+		if (backgroundMusic.timeSamples % 87273 > 12000 && Mathf.Abs((backgroundMusic.timeSamples % 87273) - 87273) > 4000) {
+			loopedBeat = false;
+		}	
+	}
+
+	void CheckBeatOld(){
 		if ((Mathf.Min(backgroundMusic.timeSamples % 12000, Mathf.Abs((backgroundMusic.timeSamples % 12000) - 12000)) < 2000) && !loopedQuant) {
 			loopedQuant = true;
 			//beat.ReportHalfBeat();

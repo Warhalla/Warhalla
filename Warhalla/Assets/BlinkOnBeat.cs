@@ -24,6 +24,6 @@ public class BlinkOnBeat : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		MusicManager.MakeBeat -= Blink;
+		MusicManager.OnBeat -= Blink;
 	}
 }
