@@ -27,11 +27,12 @@ public class MusicManager : MonoBehaviour {
 
 	public void UpdateActiveInstrument(Instrument instrument){
 		activeInstrument = instrument;
-		activeInstrumentUI.text = instrument.ToString();
+		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 
 	public void ResetInstrument(){
 		activeInstrument = Instrument.None;
+		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 	
 	public Instrument GetActiveInstrument(){

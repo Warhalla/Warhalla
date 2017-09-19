@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RandomInstrumentOnBeat : MonoBehaviour {
 
 	private Text text;
+	public Image correct;
 	private Instrument requiredInstrument = Instrument.None;
 	private MusicManager music;
 
@@ -18,9 +19,9 @@ public class RandomInstrumentOnBeat : MonoBehaviour {
 	
 	void UpdateText(){
 		if(requiredInstrument == music.GetActiveInstrument()){
-			print("Yay");
+			correct.color = Color.green;
 		} else {
-			print("Nay");
+			correct.color = Color.red;
 		}
 		music.ResetInstrument();
 		requiredInstrument = RandomInstrument();
