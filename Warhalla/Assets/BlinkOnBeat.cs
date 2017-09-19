@@ -6,11 +6,18 @@ using UnityEngine.UI;
 public class BlinkOnBeat : MonoBehaviour {
 
 	private Button button;
+	public int timeMeasure;
 
 	// Use this for initialization
 	void Start () {
 		button = GetComponent<Button>();
-		MusicManager.OnBeat += Blink;
+		if(timeMeasure == 0){
+			MusicManager.OnBeat += Blink;
+		} else if(timeMeasure == 1){
+			MusicManager.OnHalfBar += Blink;
+		} else {
+			MusicManager.OnBar += Blink;
+		}
 	}
 	
 	// Update is called once per frame

@@ -1,62 +1,61 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour {
 
 	public delegate void BeatAction();
-    public static event BeatAction OnBeat;
+    public static event BeatAction OnBar;
+	public static event BeatAction OnHalfBar;
+	public static event BeatAction OnBeat;
+
+	private int beatCounter = 0;
 
 	private AudioSource backgroundMusic;
 	private bool loopedQuant = false;
 	private bool loopedBeat = false;
 
+	private Instrument activeInstrument = Instrument.None;
+
+	public Text activeInstrumentUI;
+
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
-		//StartCoroutine(BeatEverySecond());
+	}
+
+	public void UpdateActiveInstrument(Instrument instrument){
+		activeInstrument = instrument;
+		activeInstrumentUI.text = instrument.ToString();
+	}
+
+	public void ResetInstrument(){
+		activeInstrument = Instrument.None;
 	}
 	
+	public Instrument GetActiveInstrument(){
+		return activeInstrument;
+	}
+
 	// Update is called once per frame
 	void Update () {
-		if(Input.anyKeyDown){
-			//print(backgroundMusic.timeSamples);
-		}
 		CheckBeat();
 	}
 
-	IEnumerator BeatEverySecond(){
-		while(true){
-			yield return new WaitForSeconds(1f);
-			print("beat");
-			OnBeat();
-		}
-	}
-
 	void CheckBeat(){
-		if ((Mathf.Min(backgroundMusic.timeSamples % 87273, Mathf.Abs((backgroundMusic.timeSamples % 87273) - 87273)) < 2000) && !loopedBeat) {
+		if ((Mathf.Min(backgroundMusic.timeSamples % 21818, Mathf.Abs((backgroundMusic.timeSamples % 21818) - 21818)) < 2000) && !loopedBeat) {
 			loopedBeat = true;
 			OnBeat();
+			beatCounter++;
+			if(beatCounter % 2 == 0){
+				OnHalfBar();
+			}
+			if(beatCounter % 4 == 0){
+				OnBar();
+			}
 		}
-		if (backgroundMusic.timeSamples % 87273 > 12000 && Mathf.Abs((backgroundMusic.timeSamples % 87273) - 87273) > 4000) {
-			loopedBeat = false;
-		}	
-	}
-
-	void CheckBeatOld(){
-		if ((Mathf.Min(backgroundMusic.timeSamples % 12000, Mathf.Abs((backgroundMusic.timeSamples % 12000) - 12000)) < 2000) && !loopedQuant) {
-			loopedQuant = true;
-			//beat.ReportHalfBeat();
-		}
-		if (backgroundMusic.timeSamples % 12000 > 6000 && Mathf.Abs((backgroundMusic.timeSamples % 12000) - 12000) > 4000) {
-			loopedQuant = false;
-		}
-		
-		if ((Mathf.Min(backgroundMusic.timeSamples % 24000, Mathf.Abs((backgroundMusic.timeSamples % 24000) - 24000)) < 2000) && !loopedBeat) {
-			loopedBeat = true;
-			OnBeat();
-		}
-		if (backgroundMusic.timeSamples % 24000 > 12000 && Mathf.Abs((backgroundMusic.timeSamples % 24000) - 24000) > 4000) {
+		if (backgroundMusic.timeSamples % 21818 > 12000 && Mathf.Abs((backgroundMusic.timeSamples % 21818) - 21818) > 4000) {
 			loopedBeat = false;
 		}	
 	}
