@@ -21,6 +21,7 @@ public class MusicManager : MonoBehaviour {
 
 	private AudioClip[] harps;
 	private AudioClip[] flutes;
+	private AudioClip[] horns;
 	private InstrumentList instrumentList;
 
 	// Use this for initialization
@@ -29,6 +30,7 @@ public class MusicManager : MonoBehaviour {
 		instrumentList = FindObjectOfType<InstrumentList>();
 		harps = Resources.LoadAll<AudioClip>("Audio/Harp");
 		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
+		horns = Resources.LoadAll<AudioClip>("Audio/Horn");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -50,6 +52,8 @@ public class MusicManager : MonoBehaviour {
 			PlaySound(harps);
 		} else if(activeInstrument == Instrument.Flute){
 			PlaySound(flutes);
+		} else if(activeInstrument == Instrument.Horn){
+			PlaySound(horns);
 		}
 	}
 
