@@ -17,12 +17,15 @@ public class MusicManager : MonoBehaviour {
 	private bool loopedBeat = false;
 
 	private Instrument activeInstrument = Instrument.None;
-
+	public Image correct;
 	public Text activeInstrumentUI;
+
+	private AudioClip[] harps;
 
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
+		harps = Resources.LoadAll<AudioClip>("Audio/Harp");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -30,11 +33,27 @@ public class MusicManager : MonoBehaviour {
 		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 
-	public void ResetInstrument(){
+	public void CheckInstrument(Instrument instrument){
+		if(instrument == activeInstrument){
+			Correct();
+		} else {
+			Incorrect();
+		}
 		activeInstrument = Instrument.None;
 		activeInstrumentUI.text = activeInstrument.ToString();
 	}
 	
+	private void Correct(){
+		correct.color = Color.green;
+		if(activeInstrument == Instrument.Harp){
+			backgroundMusic.PlayOneShot(harps[Random.Range(0, harps.Length)]);
+		}
+	}
+
+	private void Incorrect(){
+		correct.color = Color.red;
+	}
+
 	public Instrument GetActiveInstrument(){
 		return activeInstrument;
 	}
