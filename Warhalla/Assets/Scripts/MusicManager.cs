@@ -17,8 +17,6 @@ public class MusicManager : MonoBehaviour {
 	private bool loopedBeat = false;
 
 	private Instrument activeInstrument = Instrument.None;
-	public Image correct;
-
 	private AudioClip[] harps;
 	private AudioClip[] flutes;
 	private AudioClip[] horns;
@@ -49,7 +47,6 @@ public class MusicManager : MonoBehaviour {
 	}
 	
 	private void Correct(){
-		correct.color = Color.green;
 		if(activeInstrument == Instrument.Harp){
 			PlaySound(harps);
 		} else if(activeInstrument == Instrument.Flute){
@@ -67,7 +64,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	private void Incorrect(){
-		correct.color = Color.red;
+		//correct.color = Color.red;
 	}
 
 	public Instrument GetActiveInstrument(){
