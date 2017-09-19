@@ -43,6 +43,11 @@ public class MusicManager : MonoBehaviour {
 	void Update () {
 		CheckBeat();
 	}
+	
+	Instrument RandomAnyInstrument(){
+		int instrument = Random.Range(0,4);
+		return (Instrument) instrument;
+	}
 
 	void CheckBeat(){
 		if ((Mathf.Min(backgroundMusic.timeSamples % 21818, Mathf.Abs((backgroundMusic.timeSamples % 21818) - 21818)) < 2000) && !loopedBeat) {
