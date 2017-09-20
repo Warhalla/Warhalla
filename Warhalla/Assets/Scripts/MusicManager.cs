@@ -46,7 +46,6 @@ public class MusicManager : MonoBehaviour {
 		if(instrumentList.GetCurrentInstrument() == activeInstrument && activeInstrument != Instrument.None){
 			Correct();
 		} else if(instrumentList.GetCurrentInstrument() == Instrument.None){
-
 		} else {
 			Incorrect();
 		}
@@ -95,7 +94,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	public int GetProgress(){
-		print(progress);
+		//print(progress);
 		return progress;
 	}
 

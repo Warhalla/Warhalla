@@ -6,9 +6,9 @@ public class InstrumentList : MonoBehaviour {
 
 	private float vikingSpawnX;
 
-	public GameObject viking_flute;
-	public GameObject viking_harp;
-	public GameObject viking_horn;
+	private GameObject[] viking_flute;
+	private GameObject[] viking_harp;
+	private GameObject[] viking_horn;
 	private int index = 0;
 	private List<Instrument> instrument_order;
 	private List<GameObject> viking_order;
@@ -17,6 +17,10 @@ public class InstrumentList : MonoBehaviour {
 	public int viking_distance = 3;
 
 	void Start () {
+		viking_flute = Resources.LoadAll<GameObject>("Vikings/FlutePrefabs");
+		viking_harp = Resources.LoadAll<GameObject>("Vikings/HarpPrefabs");
+		viking_horn = Resources.LoadAll<GameObject>("Vikings/HornPrefabs");
+
 		instrument_order = new List<Instrument>();
 		viking_order = new List<GameObject>();
 		music = FindObjectOfType<MusicManager>();
@@ -33,15 +37,19 @@ public class InstrumentList : MonoBehaviour {
 		viking_order.Add(null);
 	}	
 
+	GameObject FindPrefab(GameObject[] list){
+		return list[Random.Range(0, list.Length)];
+	}
+
 	private void SpawnViking(){
 		instrument_order.Add(RandomInstrument());
 		int i = instrument_order.Count - 1;
 		if (instrument_order [i] == Instrument.Flute) {
-			viking_order.Add(Instantiate (viking_flute, new Vector2 (i * viking_distance, -1f), Quaternion.identity));
+			viking_order.Add(Instantiate (FindPrefab(viking_flute), new Vector2 (i * viking_distance, -1f), Quaternion.identity));
 		} else if (instrument_order [i] == Instrument.Harp) {
-			viking_order.Add(Instantiate (viking_harp, new Vector2 (i * viking_distance, -1f), Quaternion.identity));
+			viking_order.Add(Instantiate (FindPrefab(viking_harp), new Vector2 (i * viking_distance, -1f), Quaternion.identity));
 		} else if (instrument_order [i] == Instrument.Horn) {
-			viking_order.Add(Instantiate (viking_horn, new Vector2 (i * viking_distance, -1f), Quaternion.identity));
+			viking_order.Add(Instantiate (FindPrefab(viking_horn), new Vector2 (i * viking_distance, -1f), Quaternion.identity));
 		} else {
 			viking_order.Add(null);
 		}
@@ -54,6 +62,7 @@ public class InstrumentList : MonoBehaviour {
 	}
 
 	public Instrument GetCurrentInstrument(){
+		//print(instrument_order[index]);
 		return instrument_order[index];
 	}
 
