@@ -71,12 +71,8 @@ public class FollowerAudio : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		if(doubled && !tripled){
-			MusicManager.OnHalfBar -= Yell;
-		} else if(doubled && tripled){
-			MusicManager.OnBeat -= Yell;
-		} else {
-			MusicManager.OnBar -= Yell;
-		}
+		MusicManager.OnHalfBar -= Yell;
+		MusicManager.OnBeat -= Yell;
+		MusicManager.OnBar -= Yell;
 	}
 }
