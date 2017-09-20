@@ -27,6 +27,9 @@ public class MusicManager : MonoBehaviour {
 	private ProgressUpdate progressBar;
 	private int progress = 10;
 
+	private GameObject canvas;
+	public GameObject victoryObj;
+
 	// Use this for initialization
 	void Start () {
 		backgroundMusic = GetComponent<AudioSource>();
@@ -36,6 +39,7 @@ public class MusicManager : MonoBehaviour {
 		horns = Resources.LoadAll<AudioClip>("Audio/Horn");
 		player = GameObject.FindGameObjectWithTag("Player");
 		progressBar = FindObjectOfType<ProgressUpdate>();
+		canvas = GameObject.Find ("Canvas");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -57,6 +61,9 @@ public class MusicManager : MonoBehaviour {
 		if(progress == 24){
 			print("victory");
 			progress = 10;
+			GameObject victory = Instantiate (victoryObj, new Vector3 (0, 0, 0), Quaternion.identity);
+			victory.transform.parent = canvas.transform;
+			victory.GetComponent<RectTransform> ().localPosition = new Vector3 (0,0,0);
 			// Load something
 		}
 		progress++;
