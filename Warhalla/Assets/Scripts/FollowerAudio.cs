@@ -64,7 +64,11 @@ public class FollowerAudio : MonoBehaviour {
 
 	void YellThreeOfFour(){
 		if(shoutCounter % 3 != 0 && shoutCounter != 0){
-			voices.PlayOneShot(voiceclips[Random.Range(0, voiceclips.Length)], loudness);		
+			if(voices == null){
+				voices = GetComponent<AudioSource>();
+			} else {
+				voices.PlayOneShot(voiceclips[Random.Range(0, voiceclips.Length)], loudness);		
+			}
 		}
 		shoutCounter = (shoutCounter + 1 ) % 5;
 	}
