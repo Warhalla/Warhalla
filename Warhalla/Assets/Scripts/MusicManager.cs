@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour {
 
@@ -23,6 +24,8 @@ public class MusicManager : MonoBehaviour {
 	private AudioClip[] horns;
 	private InstrumentList instrumentList;
 	private GameObject player;
+	private ProgressUpdate progressBar;
+	private int progress = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +35,7 @@ public class MusicManager : MonoBehaviour {
 		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
 		horns = Resources.LoadAll<AudioClip>("Audio/Horn");
 		player = GameObject.FindGameObjectWithTag("Player");
+		progressBar = FindObjectOfType<ProgressUpdate>();
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -41,13 +45,22 @@ public class MusicManager : MonoBehaviour {
 	public void CheckInstrument(){
 		if(instrumentList.GetCurrentInstrument() == activeInstrument && activeInstrument != Instrument.None){
 			Correct();
+		} else if(instrumentList.GetCurrentInstrument() == Instrument.None){
+
 		} else {
 			Incorrect();
 		}
 		activeInstrument = Instrument.None;
+		progressBar.UpdateProgress();
 	}
 	
 	private void Correct(){
+		if(progress == 24){
+			print("victory");
+			progress = 10;
+			// Load something
+		}
+		progress++;
 		PlayInstrument();
 		GameObject viking = instrumentList.GetCurrentViking();
 		viking.transform.parent = player.transform;
@@ -72,7 +85,18 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	private void Incorrect(){
+		if(progress < 2){
+			print("game over!");
+			progress = 10;
+			SceneManager.LoadScene("Main_menu");
+		}
+		progress -= 2;
 		//correct.color = Color.red;
+	}
+
+	public int GetProgress(){
+		print(progress);
+		return progress;
 	}
 
 	public Instrument GetActiveInstrument(){

@@ -19,4 +19,8 @@ public class FlipOnBeat : MonoBehaviour {
 		}
 		flipped = !flipped;
 	}
+
+	void OnDestroy(){
+		MusicManager.OnBeat -= Flip;
+	}
 }

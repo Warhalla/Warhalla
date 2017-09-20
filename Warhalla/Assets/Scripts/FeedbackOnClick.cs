@@ -52,4 +52,9 @@ public class FeedbackOnClick : MonoBehaviour {
 			MusicManager.OnBar -= ShrinkOnBeat;
 		}
 	}
+
+	void OnDestroy()
+	{
+		MusicManager.OnBar -= ShrinkOnBeat;
+	}
 }

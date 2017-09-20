@@ -31,6 +31,12 @@ public class BlinkOnBeat : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		MusicManager.OnBeat -= Blink;
+		if(timeMeasure == 0){
+			MusicManager.OnBeat -= Blink;
+		} else if(timeMeasure == 1){
+			MusicManager.OnHalfBar -= Blink;
+		} else {
+			MusicManager.OnBar -= Blink;
+		}
 	}
 }

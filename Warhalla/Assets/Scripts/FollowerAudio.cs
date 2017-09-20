@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class FollowerAudio : MonoBehaviour {
 
-	private AudioSource voices;
+	public AudioSource voices;
 	private AudioClip[] voiceclips;
 	private AudioMixer mixer;
 	private float loudness = 0f;
@@ -69,4 +69,14 @@ public class FollowerAudio : MonoBehaviour {
 		shoutCounter = (shoutCounter + 1 ) % 5;
 	}
 
+	void OnDestroy()
+	{
+		if(doubled && !tripled){
+			MusicManager.OnHalfBar -= Yell;
+		} else if(doubled && tripled){
+			MusicManager.OnBeat -= Yell;
+		} else {
+			MusicManager.OnBar -= Yell;
+		}
+	}
 }
