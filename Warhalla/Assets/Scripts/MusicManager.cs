@@ -51,7 +51,7 @@ public class MusicManager : MonoBehaviour {
 		PlayInstrument();
 		GameObject viking = instrumentList.GetCurrentViking();
 		viking.transform.parent = player.transform;
-		viking.transform.localPosition = new Vector3(Random.Range(-3f, -7f), Random.Range(-4gf, 0f), 0);
+		viking.transform.localPosition = new Vector3(Random.Range(-3f, -7f), Random.Range(-4, 0f), 0);
 		viking.transform.rotation = new Quaternion(0,180,0,0);
 		viking.GetComponent<SpriteRenderer>().sortingOrder = -(int)(viking.transform.localPosition.y * 10);
 		player.SendMessage("LoudnessUp"); // Tie this to progressmeter instead
