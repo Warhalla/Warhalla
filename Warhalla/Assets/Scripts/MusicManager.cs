@@ -28,6 +28,8 @@ public class MusicManager : MonoBehaviour {
 	private int progress = 10;
 
 	private BardMovement moveScript;
+	private GameObject canvas;
+	public GameObject victoryObj;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +41,7 @@ public class MusicManager : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		moveScript = player.GetComponent<BardMovement>();
 		progressBar = FindObjectOfType<ProgressUpdate>();
+		canvas = GameObject.Find ("Canvas");
 	}
 
 	public void UpdateActiveInstrument(Instrument instrument){
@@ -60,6 +63,9 @@ public class MusicManager : MonoBehaviour {
 		if(progress == 24){
 			print("victory");
 			progress = 10;
+			GameObject victory = Instantiate (victoryObj, new Vector3 (0, 0, 0), Quaternion.identity);
+			victory.transform.parent = canvas.transform;
+			victory.GetComponent<RectTransform> ().localPosition = new Vector3 (0,0,0);
 			// Load something
 		}
 		progress++;
