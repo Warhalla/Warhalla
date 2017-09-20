@@ -62,6 +62,9 @@ public class MusicManager : MonoBehaviour {
 			print("victory");
 			progress = 10;
 			GameObject victory = Instantiate (victoryObj, new Vector3 (0, 0, 0), Quaternion.identity);
+			for (int i = 0; i < canvas.transform.GetChildCount (); i++) {
+				canvas.gameObject.transform.GetChild (i).gameObject.SetActive (false);
+			}
 			victory.transform.parent = canvas.transform;
 			victory.GetComponent<RectTransform> ().localPosition = new Vector3 (0,0,0);
 			// Load something
