@@ -20,7 +20,7 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.anyKey) {
+		if (Input.anyKey ) {
 			startgame = true;
 		}
 		backgroundPos = new Vector3 (backgroundPos.x + Time.deltaTime * -0.2f, backgroundPos.y, backgroundPos.z);
