@@ -13,6 +13,9 @@ public class MainMenuManager : MonoBehaviour {
 	public GameObject txt;
 	public GameObject menuBackground;
 
+	public AudioClip swordClip;
+	public AudioSource audiosource;
+
 	void Start(){
 		startgame = false;
 		textLift = txt.transform.GetComponent<RectTransform> ().position.y;
@@ -22,6 +25,7 @@ public class MainMenuManager : MonoBehaviour {
 	void Update () {
 		if (Input.anyKey ) {
 			startgame = true;
+			audiosource.PlayOneShot (swordClip, 1f);
 		}
 		backgroundPos = new Vector3 (backgroundPos.x + Time.deltaTime * -0.2f, backgroundPos.y, backgroundPos.z);
 		menuBackground.transform.position = backgroundPos;
@@ -33,7 +37,7 @@ public class MainMenuManager : MonoBehaviour {
 			fadePlane.GetComponent<SpriteRenderer>().color = tmp;
 
 			textLift += timer * 1;
-			Vector3 txtPos = new Vector3 (315.5f, textLift, 0);
+			Vector3 txtPos = new Vector3 (txt.transform.GetComponent<RectTransform> ().position.x, textLift, txt.transform.GetComponent<RectTransform> ().position.z);
 			txt.transform.GetComponent<RectTransform> ().position = txtPos;
 
 			if (timer > 1f) {
