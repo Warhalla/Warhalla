@@ -3,15 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	float timer;
+	bool startgame;
+
+	public Camera maincam;
+	public GameObject background;
+
+	void Start(){
+		startgame = false;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (Input.anyKey) {
-			SceneManager.LoadScene ("Game", LoadSceneMode.Single);
+			startgame = true;
+		}
+		if (startgame) {
+			timer += Time.deltaTime;
+			maincam.GetComponent<Camera> ().orthographicSize -= Time.deltaTime;
+			if (timer > 1f) {
+				SceneManager.LoadScene ("Game", LoadSceneMode.Single);
+			}
 		}
 	}
 }
