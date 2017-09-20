@@ -27,6 +27,7 @@ public class MusicManager : MonoBehaviour {
 	private ProgressUpdate progressBar;
 	private int progress = 10;
 
+	private BardMovement moveScript;
 	private GameObject canvas;
 	public GameObject victoryObj;
 
@@ -38,6 +39,7 @@ public class MusicManager : MonoBehaviour {
 		flutes = Resources.LoadAll<AudioClip>("Audio/Flute");
 		horns = Resources.LoadAll<AudioClip>("Audio/Horn");
 		player = GameObject.FindGameObjectWithTag("Player");
+		moveScript = player.GetComponent<BardMovement>();
 		progressBar = FindObjectOfType<ProgressUpdate>();
 		canvas = GameObject.Find ("Canvas");
 	}
@@ -70,22 +72,26 @@ public class MusicManager : MonoBehaviour {
 			// Load something
 		}
 		progress++;
-		PlayInstrument();
 		GameObject viking = instrumentList.GetCurrentViking();
 		viking.transform.parent = player.transform;
 		viking.transform.localPosition = new Vector3(Random.Range(-3f, -7f), Random.Range(-4f, 0f), 0);
 		viking.transform.rotation = new Quaternion(0,180,0,0);
 		viking.GetComponent<SpriteRenderer>().sortingOrder = -(int)(viking.transform.localPosition.y * 10);
+		viking.SendMessage("StartWalking");
 		player.SendMessage("LoudnessUp"); // Tie this to progressmeter instead
+		PlayInstrument();
 	}
 
 	private void PlayInstrument(){
 		if(activeInstrument == Instrument.Harp){
 			PlaySound(instruments[(int) activeInstrument], harps);
+			moveScript.Play(Instrument.Harp);
 		} else if(activeInstrument == Instrument.Flute){
 			PlaySound(instruments[(int) activeInstrument],flutes);
+			moveScript.Play(Instrument.Flute);
 		} else if(activeInstrument == Instrument.Horn){
 			PlaySound(instruments[(int) activeInstrument],horns);
+			moveScript.Play(Instrument.Horn);
 		}
 	}
 

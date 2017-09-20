@@ -13,8 +13,9 @@ public class BardMovement : MonoBehaviour {
 	private Sprite[] hitSprites;
 	int hitIndex = 0;
 	private Sprite[] moveSprites;
-	int moveIndex = 0;
+	int moveIndex = 1;
 	private SpriteRenderer image;
+	public GameObject[] playposes;
 
 	void Start () {
 		image = GetComponent<SpriteRenderer>();
@@ -28,8 +29,11 @@ public class BardMovement : MonoBehaviour {
 		timer += Time.deltaTime * bard_move_speed;
 	}
 
-
 	void BardMove(){
+		if(image.enabled == false){
+			image.enabled = true;
+			DisableAnimations();
+		}
 		image.sprite = moveSprites[moveIndex % 2];
 		moveIndex++;
 		bard_x_from = this.transform.position.x;
@@ -38,6 +42,22 @@ public class BardMovement : MonoBehaviour {
 		timer = 0;
 	}
 
+	void DisableAnimations(){
+		foreach(GameObject g in playposes){
+			g.SetActive(false);
+		}
+	}
+
+	public void Play(Instrument instrument){
+		print("playing");
+		StartCoroutine(waitAndPlay(instrument));
+	}
+
+	IEnumerator waitAndPlay(Instrument instrument){
+		yield return new WaitForSeconds(0.1f);
+		image.enabled = false;
+		playposes[(int)instrument].SetActive(true);
+	}
 
 	void OnDestroy()
 	{

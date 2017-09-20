@@ -27,8 +27,12 @@ public class AnimateToMusic : MonoBehaviour {
 		if(!walking){
 			hitIndex++;
 			image.sprite = hitSprites[hitIndex % 4];
+		} else if(moveSprites.Length > 0) {
+			moveIndex++;
+			image.sprite = moveSprites[moveIndex % 2];
 		} else {
-
+			hitIndex++;
+			image.sprite = hitSprites[hitIndex % 4];	
 		}
 	}
 
