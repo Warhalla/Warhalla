@@ -28,4 +28,10 @@ public class BardMovement : MonoBehaviour {
 		timer = 0;
 	}
 
+
+	void OnDestroy()
+	{
+		MusicManager.OnBar -= BardMove;
+	}
+
 }

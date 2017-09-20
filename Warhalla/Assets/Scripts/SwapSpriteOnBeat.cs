@@ -11,10 +11,16 @@ public class SwapSpriteOnBeat : MonoBehaviour {
 
 	private bool swapped = false;
 
+	public bool faster = false;
+
 	// Use this for initialization
 	void Start () {
 		image = GetComponent<SpriteRenderer>();
-		MusicManager.OnHalfBar += Swap;
+		if(faster){
+			MusicManager.OnBeat += Swap;
+		} else{
+			MusicManager.OnHalfBar += Swap;
+		}
 	}
 	
 	// Update is called once per frame
@@ -29,5 +35,13 @@ public class SwapSpriteOnBeat : MonoBehaviour {
 			image.sprite = sprite2;
 		}
 		swapped = !swapped;
+	}
+	void OnDestroy()
+	{
+		if(faster){
+			MusicManager.OnBeat -= Swap;
+		} else{
+			MusicManager.OnHalfBar -= Swap;
+		}
 	}
 }
