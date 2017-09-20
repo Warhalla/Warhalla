@@ -66,6 +66,7 @@ public class MusicManager : MonoBehaviour {
 		viking.transform.localPosition = new Vector3(Random.Range(-3f, -7f), Random.Range(-4f, 0f), 0);
 		viking.transform.rotation = new Quaternion(0,180,0,0);
 		viking.GetComponent<SpriteRenderer>().sortingOrder = -(int)(viking.transform.localPosition.y * 10);
+		viking.SendMessage("StartWalking");
 		player.SendMessage("LoudnessUp"); // Tie this to progressmeter instead
 	}
 

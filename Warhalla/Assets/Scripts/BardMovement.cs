@@ -13,7 +13,7 @@ public class BardMovement : MonoBehaviour {
 	private Sprite[] hitSprites;
 	int hitIndex = 0;
 	private Sprite[] moveSprites;
-	int moveIndex = 0;
+	int moveIndex = 1;
 	private SpriteRenderer image;
 
 	void Start () {
@@ -28,7 +28,6 @@ public class BardMovement : MonoBehaviour {
 		timer += Time.deltaTime * bard_move_speed;
 	}
 
-
 	void BardMove(){
 		image.sprite = moveSprites[moveIndex % 2];
 		moveIndex++;
@@ -37,7 +36,6 @@ public class BardMovement : MonoBehaviour {
 		start_time = Time.time;
 		timer = 0;
 	}
-
 
 	void OnDestroy()
 	{
