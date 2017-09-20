@@ -25,7 +25,7 @@ public class MainMenuManager : MonoBehaviour {
 	void Update () {
 		if (Input.anyKey ) {
 			startgame = true;
-			audiosource.PlayOneShot (swordClip, 1f);
+			audiosource.PlayOneShot (swordClip, 0.75f);
 		}
 		backgroundPos = new Vector3 (backgroundPos.x + Time.deltaTime * -0.2f, backgroundPos.y, backgroundPos.z);
 		menuBackground.transform.position = backgroundPos;
